@@ -1,0 +1,12 @@
+C:\Users\zgrum\Source\Repos\GoogleDrive1\GoogleDrive1\bin\Debug\netcoreapp2.0\GoogleDrive1.deps.json
+C:\Users\zgrum\Source\Repos\GoogleDrive1\GoogleDrive1\bin\Debug\netcoreapp2.0\GoogleDrive1.runtimeconfig.json
+C:\Users\zgrum\Source\Repos\GoogleDrive1\GoogleDrive1\bin\Debug\netcoreapp2.0\GoogleDrive1.runtimeconfig.dev.json
+C:\Users\zgrum\Source\Repos\GoogleDrive1\GoogleDrive1\bin\Debug\netcoreapp2.0\GoogleDrive1.dll
+C:\Users\zgrum\Source\Repos\GoogleDrive1\GoogleDrive1\bin\Debug\netcoreapp2.0\GoogleDrive1.pdb
+C:\Users\zgrum\Source\Repos\GoogleDrive1\GoogleDrive1\obj\Debug\netcoreapp2.0\GoogleDrive1.csprojResolveAssemblyReference.cache
+C:\Users\zgrum\Source\Repos\GoogleDrive1\GoogleDrive1\obj\Debug\netcoreapp2.0\GoogleDrive1.csproj.CoreCompileInputs.cache
+C:\Users\zgrum\Source\Repos\GoogleDrive1\GoogleDrive1\obj\Debug\netcoreapp2.0\GoogleDrive1.AssemblyInfoInputs.cache
+C:\Users\zgrum\Source\Repos\GoogleDrive1\GoogleDrive1\obj\Debug\netcoreapp2.0\GoogleDrive1.AssemblyInfo.cs
+C:\Users\zgrum\Source\Repos\GoogleDrive1\GoogleDrive1\obj\Debug\netcoreapp2.0\GoogleDrive1.dll
+C:\Users\zgrum\Source\Repos\GoogleDrive1\GoogleDrive1\obj\Debug\netcoreapp2.0\GoogleDrive1.pdb
+C:\Users\zgrum\Source\Repos\GoogleDrive1\GoogleDrive1\bin\Debug\netcoreapp2.0\client_secret.json
