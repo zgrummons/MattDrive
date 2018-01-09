@@ -23,14 +23,17 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">GoogleDrive1</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                @if(Model != null && Model.Quota != null) { 
+                    <ul class="nav navbar-nav">
+                        <li><a>Size: @Model.Quota.TotalSize</a></li>
+                        <li><a>Trash: @Model.Quota.RecycleBinSize </a></li>
+                    </ul>
+                }
+                <ul class="nav navbar-nav navbar-right">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     <li><a asp-area="" asp-controller="Test" asp-action="Index">Test</a></li>
-                </ul>
-                <ul  class="nav navbar-nav">
-                    <li><a>usage: @Model.Quota.TotalSize</a></li>
                 </ul>
             </div>
         </div>

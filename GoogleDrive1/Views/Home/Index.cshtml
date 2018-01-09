@@ -1,10 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-Unlimited: @Model.Quota.Unlimited<br/>
-usage: @Model.Quota.TotalSize<br/>
-total: @Model.Quota.DriveSize<br/>
-recycle bin: @Model.Quota.RecycleBinSize<br/>
 
 @foreach (Google.Apis.Drive.v3.Data.File file in Model.Files) {
     <li>@file.Name</li>
