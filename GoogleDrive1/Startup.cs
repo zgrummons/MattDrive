@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GoogleDrive1.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ namespace GoogleDrive1
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            DataAccess.Initialize();
         }
 
         public IConfiguration Configuration { get; }

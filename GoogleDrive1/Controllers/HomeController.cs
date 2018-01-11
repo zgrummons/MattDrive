@@ -16,45 +16,24 @@ namespace GoogleDrive1.Controllers
 {
     public class HomeController : Controller
     {
-        static string[] Scopes = { DriveService.Scope.DriveReadonly };
-
         public IActionResult Index()
         {
-            UserCredential credential;
+            Stopwatch sw = Stopwatch.StartNew();
 
-            using (var stream =
-                new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
-            {
-                string credPath = Environment.GetFolderPath(
-                    Environment.SpecialFolder.Personal);
-                credPath = Path.Combine(credPath, ".credentials/drive-dotnet-quickstart.json");
-
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-            }
-
-            // Create Drive API service.
-            var service = new DriveService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = "test2",
-            });
 
             // Define parameters of request.
-            FilesResource.ListRequest listRequest = service.Files.List();
-            AboutResource.GetRequest about = service.About.Get();
-            listRequest.PageSize = 10;
+            FilesResource.ListRequest listRequest = DataAccess.DriveService.Files.List();
+            listRequest.Q = "mimeType=\'application/vnd.google-apps.folder\' and \'root\' in parents";
+            listRequest.OrderBy = "name asc";
+            listRequest.PageSize = 1000;
             listRequest.Fields = "nextPageToken, files(id, name)";
-            about.Fields = "storageQuota";
-            Google.Apis.Drive.v3.Data.About.StorageQuotaData aboutData = about.Execute().StorageQuota;
             // List files.
             IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute()
                 .Files;
-            return View(new DebugModel(){Files = files, Quota = new QuotaModel(aboutData)});
+
+            sw.Stop();
+
+            return View(new DebugModel {Files = files, Quota = new QuotaModel(), TimeTaken = sw.ElapsedMilliseconds});
         }
 
         public IActionResult About()

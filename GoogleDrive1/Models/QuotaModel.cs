@@ -10,19 +10,39 @@ namespace GoogleDrive1.Models
     public class QuotaModel
     {
         public bool Unlimited;
-        public string TotalSize;
+
+        public string TotalSize
+        {
+            get
+            {
+                if ((DateTime.Now - _lastChecked).Hours == 1) UpdateQuota();
+                return _totalSize;
+            }
+        }
         public string DriveSize;
         public string RecycleBinSize;
+        private string _totalSize;
+        private DateTime _lastChecked;
+        private About.StorageQuotaData _quotaData;
 
-        public QuotaModel(About.StorageQuotaData data)
+        public QuotaModel()
         {
-            Unlimited = data.Limit == null;
-            TotalSize = FormatSize(data.Usage);
-            DriveSize = FormatSize(data.UsageInDrive);
-            RecycleBinSize = FormatSize(data.UsageInDriveTrash);
+            UpdateQuota();
         }
 
-        private string FormatSize(long? input)
+        private void UpdateQuota()
+        {
+            var about = DataAccess.DriveService.About.Get();
+            about.Fields = "storageQuota";
+            _quotaData = about.Execute().StorageQuota;
+            _lastChecked = DateTime.Now;
+            Unlimited = _quotaData.Limit == null;
+            _totalSize = FormatSize(_quotaData.Usage);
+            DriveSize = FormatSize(_quotaData.UsageInDrive);
+            RecycleBinSize = FormatSize(_quotaData.UsageInDriveTrash);
+        }
+
+        private static string FormatSize(long? input)
         {
             if (input < 1024)
                 return string.Format($"{input} B");

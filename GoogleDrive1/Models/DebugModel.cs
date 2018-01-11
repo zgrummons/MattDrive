@@ -10,5 +10,6 @@ namespace GoogleDrive1.Models
     {
         public QuotaModel Quota;
         public IList<Google.Apis.Drive.v3.Data.File> Files;
+        public long TimeTaken;
     }
 }
