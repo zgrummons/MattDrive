@@ -7,25 +7,26 @@ using Google.Apis.Drive.v3.Data;
 
 namespace GoogleDrive1.Models
 {
-    public class QuotaModel
+    public sealed class QuotaModel
     {
         public bool Unlimited;
-
+        private string _totalSize;
         public string TotalSize
         {
             get
             {
-                if ((DateTime.Now - _lastChecked).Hours == 1) UpdateQuota();
+                if ((DateTime.Now - _lastChecked).Hours >= 1) UpdateQuota();
                 return _totalSize;
             }
         }
         public string DriveSize;
         public string RecycleBinSize;
-        private string _totalSize;
         private DateTime _lastChecked;
         private About.StorageQuotaData _quotaData;
 
-        public QuotaModel()
+        public static QuotaModel Instance { get; } = new QuotaModel();
+
+        private QuotaModel()
         {
             UpdateQuota();
         }

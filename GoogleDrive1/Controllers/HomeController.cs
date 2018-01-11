@@ -33,7 +33,7 @@ namespace GoogleDrive1.Controllers
 
             sw.Stop();
 
-            return View(new DebugModel {Files = files, Quota = new QuotaModel(), TimeTaken = sw.ElapsedMilliseconds});
+            return View(new DebugModel {Files = files, Quota = QuotaModel.Instance, TimeTaken = sw.ElapsedMilliseconds});
         }
 
         public IActionResult About()
