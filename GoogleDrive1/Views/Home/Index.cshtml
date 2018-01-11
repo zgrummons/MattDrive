@@ -1,7 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@if (DirectoryModel.Instance.Parents.Peek() != "root")
+{
+    <li><a>..</a></li>
+}
 @foreach (Google.Apis.Drive.v3.Data.File file in Model.Files) {
     <li>@file.Name</li>
 }

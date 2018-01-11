@@ -19,21 +19,11 @@ namespace GoogleDrive1.Controllers
         public IActionResult Index()
         {
             Stopwatch sw = Stopwatch.StartNew();
-
-
-            // Define parameters of request.
-            FilesResource.ListRequest listRequest = DataAccess.DriveService.Files.List();
-            listRequest.Q = "mimeType=\'application/vnd.google-apps.folder\' and \'root\' in parents";
-            listRequest.OrderBy = "name asc";
-            listRequest.PageSize = 1000;
-            listRequest.Fields = "nextPageToken, files(id, name)";
-            // List files.
-            IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute()
-                .Files;
-
+            var directory = DirectoryModel.Instance;
+            directory.GetDirectory("root");
             sw.Stop();
 
-            return View(new DebugModel {Files = files, Quota = QuotaModel.Instance, TimeTaken = sw.ElapsedMilliseconds});
+            return View(new DebugModel {Files = directory.Files, Quota = QuotaModel.Instance, TimeTaken = sw.ElapsedMilliseconds});
         }
 
         public IActionResult About()
