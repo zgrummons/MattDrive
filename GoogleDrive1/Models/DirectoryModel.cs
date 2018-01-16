@@ -18,17 +18,23 @@ namespace GoogleDrive1.Models
 
         private DirectoryModel()
         {
-            Parents.Push("root");
         }
 
-        public void GetDirectory(string folder)
+        public void GetDirectory(File file)
         {
-            Parents.Push(folder);
+            var filename = file.Id ?? "root";
+
+            if (file.MimeType != "application/vnd.google-apps.folder" && file.Id != null) return;
+            if (Parents.Contains(file.Name))
+                while (Parents.Count > 0 && Parents.Peek() != file.Name)
+                    Parents.Pop();
+            else
+                Parents.Push(file.Name);
 
             // Define parameters of request.
             FilesResource.ListRequest listRequest = DataAccess.DriveService.Files.List();
-            listRequest.Q = $"mimeType=\'application/vnd.google-apps.folder\' and \'{folder}\' in parents";
-            listRequest.OrderBy = "name asc";
+            listRequest.Q = $"\'{filename}\' in parents";
+            listRequest.OrderBy = "folder, name asc";
             listRequest.PageSize = 1000;
             listRequest.Fields = "nextPageToken, files(id, name)";
             // List files.

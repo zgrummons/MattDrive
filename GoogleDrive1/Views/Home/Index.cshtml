@@ -1,10 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@if (DirectoryModel.Instance.Parents.Peek() != "root")
+@foreach (var dir in DirectoryModel.Instance.Parents)
 {
-    <li><a>..</a></li>
+    @Html.ActionLink(dir, "Index", "Home", new { id = dir }) @Html.Raw(" / ")
 }
-@foreach (Google.Apis.Drive.v3.Data.File file in Model.Files) {
-    <li>@file.Name</li>
+<br />&mdash;&mdash;&mdash;<br/>
+@foreach (Google.Apis.Drive.v3.Data.File file in Model.Files)
+{
+    @Html.ActionLink(file.Name, "Index", "Home", new { nextFile = fileId })<br />
 }

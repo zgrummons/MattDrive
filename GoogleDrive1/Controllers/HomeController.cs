@@ -11,16 +11,17 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
+using File = Google.Apis.Drive.v3.Data.File;
 
 namespace GoogleDrive1.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(File file)
         {
             Stopwatch sw = Stopwatch.StartNew();
             var directory = DirectoryModel.Instance;
-            directory.GetDirectory("root");
+            directory.GetDirectory(file);
             sw.Stop();
 
             return View(new DebugModel {Files = directory.Files, Quota = QuotaModel.Instance, TimeTaken = sw.ElapsedMilliseconds});
