@@ -8,5 +8,5 @@
 <br />&mdash;&mdash;&mdash;<br/>
 @foreach (Google.Apis.Drive.v3.Data.File file in Model.Files)
 {
-    @Html.ActionLink(file.Name, "Index", "Home", new { nextFile = fileId })<br />
+    @Html.ActionLink(file.Name, "Index", "Home", new { nextFile = file.Id })<br />
 }
