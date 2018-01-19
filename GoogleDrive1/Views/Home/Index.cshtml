@@ -3,10 +3,10 @@
 }
 @foreach (var dir in DirectoryModel.Instance.Parents)
 {
-    @Html.ActionLink(dir, "Index", "Home", new { id = dir }) @Html.Raw(" / ")
+    @Html.ActionLink(dir.Name, "Index", "Home", new { dir.Id }) @Html.Raw(" / ")
 }
 <br />&mdash;&mdash;&mdash;<br/>
 @foreach (Google.Apis.Drive.v3.Data.File file in Model.Files)
 {
-    @Html.ActionLink(file.Name, "Index", "Home", new { nextFile = file.Id })<br />
+    @Html.ActionLink(file.Name, "Index", "Home", new { file.Id })<br />
 }

@@ -17,11 +17,11 @@ namespace GoogleDrive1.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(File file)
+        public IActionResult Index(string fileId)
         {
             Stopwatch sw = Stopwatch.StartNew();
             var directory = DirectoryModel.Instance;
-            directory.GetDirectory(file);
+            directory.GetDirectory(fileId);
             sw.Stop();
 
             return View(new DebugModel {Files = directory.Files, Quota = QuotaModel.Instance, TimeTaken = sw.ElapsedMilliseconds});

@@ -20,20 +20,20 @@ namespace GoogleDrive1.Models
         {            
         }
 
-        public void GetDirectory(File file)
+        public void GetDirectory(string fileId)
         {
-            var filename = file.Id ?? "root";
-
-            if (file.MimeType != "application/vnd.google-apps.folder" && file.Id != null) return;
-            //if (Parents.Contains(file.Parents))
-            //    while (Parents.Count > 0 && Parents.Peek() != file.Name)
-            //        Parents.Pop();
-            //else
-            //    Parents.Push(filename);
+            File file = Parents.First(f => f.Id == fileId);
+            if (file != null)
+                while (Parents.Count > 0 && Parents.Peek() != file)
+                    Parents.Pop();
+            else if ((file = Files.First(f => f.Id == fileId)) != null)
+                Parents.Push(file);
+            else
+                Parents.Clear();
 
             // Define parameters of request.
             FilesResource.ListRequest listRequest = DataAccess.DriveService.Files.List();
-            listRequest.Q = $"\'{filename}\' in parents";
+            listRequest.Q = $"\'{fileId}\' in parents";
             listRequest.OrderBy = "folder, name asc";
             listRequest.PageSize = 1000;
             listRequest.Fields = "nextPageToken, files(id, name, parents)";
@@ -42,3 +42,5 @@ namespace GoogleDrive1.Models
         }
     }
 }
+//"https://drive.google.com/a/apps.losrios.edu/uc?id=1ikvj5BO71CGiHp3Ccxk6_zPmOdGgPXcT&export=download",
+//"webViewLink": "https://drive.google.com/a/apps.losrios.edu/file/d/1ikvj5BO71CGiHp3Ccxk6_zPmOdGgPXcT/view?usp=drivesdk
