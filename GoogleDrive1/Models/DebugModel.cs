@@ -9,7 +9,7 @@ namespace GoogleDrive1.Models
     public class DebugModel
     {
         public QuotaModel Quota;
-        public IList<Google.Apis.Drive.v3.Data.File> Files;
+        public DirectoryModel Directory;
         public long TimeTaken;
     }
 }

@@ -1,12 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@foreach (var dir in DirectoryModel.Instance.Parents)
+@while (Model.Directory.Directory.Parents != null)
 {
-    @Html.ActionLink(dir.Name, "Index", "Home", new { dir.Id }) @Html.Raw(" / ")
+    @Html.ActionLink((string)Model.Directory.Directory.Name, "Index", "Home", new {fileId = (string) Model.Directory.Directory.Id})
+    @Html.Raw(" / ")
+    if (Model.Directory.Parents.ContainsKey(Model.Directory.Directory.Parents[0]))
+    {
+        Model.Directory.Directory = Model.Directory.Parents[Model.Directory.Directory.Id];
+    }
+    else
+    {
+        Model.Directory.Directory = Model.Directory.GetFile(Model.Directory.Directory.Id);
+        Model.Directory.Parents.TryAdd(Model.Directory.Directory.Id, Model.Directory.Directory);
+
+    }
 }
 <br />&mdash;&mdash;&mdash;<br/>
-@foreach (Google.Apis.Drive.v3.Data.File file in Model.Files)
+@foreach (Google.Apis.Drive.v3.Data.File file in Model.Directory.Files)
 {
-    @Html.ActionLink(file.Name, "Index", "Home", new { file.Id })<br />
+    if (file.MimeType == "application/vnd.google-apps.folder") { @Html.ActionLink(file.Name, "Index", "Home", new { fileId = file.Id }) }
+    else { @Html.Raw($"<a href=\"https://drive.google.com/uc?id={file.Id}\">{file.Name}</a>") }
+    <br />
 }

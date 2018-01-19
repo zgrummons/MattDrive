@@ -24,7 +24,7 @@ namespace GoogleDrive1.Controllers
             directory.GetDirectory(fileId);
             sw.Stop();
 
-            return View(new DebugModel {Files = directory.Files, Quota = QuotaModel.Instance, TimeTaken = sw.ElapsedMilliseconds});
+            return View(new DebugModel {Directory = directory, Quota = QuotaModel.Instance, TimeTaken = sw.ElapsedMilliseconds});
         }
 
         public IActionResult About()
