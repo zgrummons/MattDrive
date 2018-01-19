@@ -12,24 +12,17 @@ namespace GoogleDrive1.Models
     {
         public string Id { get; set; }
         public IList<File> Files { get; set; }
-        public Stack<File> Parents = new Stack<File>();
+        public Dictionary<string, File> Parents = new Dictionary<string, File>();
 
         public static DirectoryModel Instance { get; } = new DirectoryModel();
 
         private DirectoryModel()
-        {            
+        {
         }
 
         public void GetDirectory(string fileId)
         {
-            File file = Parents.First(f => f.Id == fileId);
-            if (file != null)
-                while (Parents.Count > 0 && Parents.Peek() != file)
-                    Parents.Pop();
-            else if ((file = Files.First(f => f.Id == fileId)) != null)
-                Parents.Push(file);
-            else
-                Parents.Clear();
+            File file = Parents[fileId] ?? GetFile(fileId);
 
             // Define parameters of request.
             FilesResource.ListRequest listRequest = DataAccess.DriveService.Files.List();
@@ -39,6 +32,13 @@ namespace GoogleDrive1.Models
             listRequest.Fields = "nextPageToken, files(id, name, parents)";
             // List files.
             Files = listRequest.Execute().Files;
+        }
+
+        public File GetFile(string fileId)
+        {
+            FilesResource.GetRequest getRequest = DataAccess.DriveService.Files.Get(fileId);
+            getRequest.Fields = "id,modifiedTime,name,parents,size";
+            return getRequest.Execute();
         }
     }
 }
