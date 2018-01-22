@@ -43,7 +43,7 @@ namespace GoogleDrive1.Models
             RecycleBinSize = FormatSize(_quotaData.UsageInDriveTrash);
         }
 
-        private static string FormatSize(long? input)
+        public static string FormatSize(long? input)
         {
             if (input < 1024)
                 return string.Format($"{input} B");

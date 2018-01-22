@@ -21,7 +21,8 @@ namespace GoogleDrive1.Controllers
         {
             Stopwatch sw = Stopwatch.StartNew();
             var directory = DirectoryModel.Instance;
-            directory.GetDirectory(fileId);
+            if (directory.Directory.Id == null || fileId != directory.Directory.Id)
+                directory.GetDirectory(fileId);
             sw.Stop();
 
             return View(new DebugModel {Directory = directory, Quota = QuotaModel.Instance, TimeTaken = sw.ElapsedMilliseconds});
