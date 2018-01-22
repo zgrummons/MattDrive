@@ -9,6 +9,6 @@
 <br />&mdash;&mdash;&mdash;<br/>
 @foreach (Google.Apis.Drive.v3.Data.File file in Model.Directory.Files)
 {
-    @(file.MimeType == "application/vnd.google-apps.folder" ? Html.ActionLink(file.Name, "Index", "Home", new {fileId = file.Id}) : Html.Raw($"<a href=\"https://drive.google.com/uc?id={file.Id}\">{file.Name}</a> <a href=\"https://drive.google.com/file/d/{file.Id}/view\" target=\"_blank\">Play online</a> {QuotaModel.FormatSize(file.Size)} {file.ModifiedTime} {file.MimeType}"))
+    @(file.MimeType == "application/vnd.google-apps.folder" ? Html.ActionLink(file.Name, "Index", "Home", new {fileId = file.Id}) : Html.Raw($"<a href=\"https://drive.google.com/file/d/{file.Id}/preview\" target=\"player\">{file.Name}</a> <a href=\"https://drive.google.com/file/d/{file.Id}/view\" target=\"_blank\">Play online</a><a href=\"https://drive.google.com/uc?id={file.Id}\">Download</a> {QuotaModel.FormatSize(file.Size)} {file.ModifiedTime} {file.MimeType}"))
     <br />
 }
